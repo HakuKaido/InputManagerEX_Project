@@ -220,13 +220,8 @@ namespace XInputAssistManager
 
                     inputManager = myObject.GetComponent<InputManager>();
 
-#if UNITY_EDITOR
                     //初期化
                     inputManager.Initialize();
-#elif UNITY_STANDALONE
-                    //破壊不可
-                    DontDestroyOnLoad(gameObject);
-#endif
                 }
 
                 return inputManager;
@@ -241,11 +236,14 @@ namespace XInputAssistManager
         }
 
         /// <summary>
-        /// 生成直後に一回だけ実行
+        /// 再生直後に一回だけ実行
         /// </summary>
         void Awake()
         {
-            Initialize();
+#if UNITY_STANDALONE
+            //破壊不可
+            DontDestroyOnLoad(gameObject);
+#endif
         }
 
         //初期化メソッド
